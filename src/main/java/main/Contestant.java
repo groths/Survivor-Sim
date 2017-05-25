@@ -1,13 +1,18 @@
 package main;
 
+import java.util.Random;
+import java.util.HashMap;
 import java.util.ArrayList;
 
 /**
  * NOW create a tribe class
  * @author Rachel, Matt
  */
+
+
 public class Contestant {
     
+
     private final String NAME;
     
     /**
@@ -19,15 +24,25 @@ public class Contestant {
     private int intelligence;
     private int charisma;
     
-    // NOW create getAllies method. Keep in mind that it is bad to return the actual allies class
-    // because then it can be changed from outside this class (never a good idea to return a private arraylist)
-    // INSTEAD one thing you could do is return a clone of the arraylist, which I think is more safe
-    private final ArrayList<Contestant> allies = new ArrayList<>();
+    private final HashMap<Contestant, Integer> relationships = new HashMap<>(Main.getTotalContestants() - 1);
+    
     
     public Contestant(String name, int age){
         this.NAME = name;
         this.AGE = age;
-        // NOW figure out how strength,intelligence,andcharisma are initialized (I recommed the Random class)
+        
+        Random rand = new Random(); 
+        this.strength = rand.nextInt(11);
+        this.intelligence = rand.nextInt(11);
+        this.charisma = rand.nextInt(11);
+        
+        ArrayList<Contestant> allContestants = Main.getAllContestants();
+        
+        //Initialize each relationship as 0
+        for(int i = 0; i < relationships.size(); i++){
+            relationships.put(allContestants.get(i), 0);
+        }
+        
     }
     
     public String getName(){
@@ -37,13 +52,45 @@ public class Contestant {
     public int getAge(){
         return AGE;
     }
-    
+
     /**
-     * QUESTION since this is non-static, is this method called for both constestants in the alliance? Would there ever be a case where createAlliance is only called for one contestant, or is it always called for both?
-     * @param ally
+     * for the add/subtract methods, I was thinking we could do something where
+     * it gets really bad if one of their stats becomes negative?
+     * (Like they get sick if their strength is low, they start screaming at everyone if their charisma is low)
+     * But then that could happen really fast if people have a low stat to begin with
+     * 
+     * ALSO i wasn't sure if maybe we should make it so their age has to do with their strength level
+     * (like generally maybe older people are weaker. but that isn't always true so idk)
      */
-    public void createAlliance(Contestant ally){
-        allies.add(ally);
+    public void addStrength(){
+        strength ++;
     }
     
+    public void subtractStrength(){
+        strength --;
+    }
+    
+    public void addIntelligence(){
+        intelligence ++;
+    }
+    
+    public void subtractIntelligence(){
+        intelligence --;
+    }
+    
+    public void addCharisma(){
+        charisma ++;
+    }
+    
+    public void subtractCharisma(){
+        charisma --;
+    }
+    
+    public void improveRelationship(Contestant other){
+        relationships.put(other, relationships.get(other) + 1);
+    }
+    
+    public void worsenRelationship(Contestant other){
+        relationships.put(other, relationships.get(other) - 1);
+    }
 }
