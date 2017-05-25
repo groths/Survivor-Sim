@@ -10,8 +10,8 @@ mainClassName = 'main.Main'
 tasks.withType(JavaCompile) {
     options.debugOptions.setDebugLevel("source,lines,vars") // compile ALL debug information
     options.fork = true  // enable compilation in a separate daemon process
-    File jc = new File("/Library/Java/JavaVirtualMachines/jdk1.8.0_131.jdk/Contents/Home")
-    options.forkOptions.javaHome = jc
+//    File jc = new File("/Library/Java/JavaVirtualMachines/jdk1.8.0_131.jdk/Contents/Home")
+//    options.forkOptions.javaHome = jc
     options.compilerArgs += ['-Xlint','-XDignore.symbol.file=true'] // optional compiler warnings to console   
 }
 
