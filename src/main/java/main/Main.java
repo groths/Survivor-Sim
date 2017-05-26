@@ -20,8 +20,6 @@ public class Main
 
         playGame();
 
-        
-
         Scanner input = new Scanner(System.in);
 
         boolean keepAsking = true;
@@ -29,13 +27,13 @@ public class Main
         String line = "";
 
         System.out.println("play again?(y/n)");
-        
+
         while (keepAsking)
         {
             line = input.nextLine();
-            
+
             System.out.println("debug 1");
-            
+
             switch (line)
             {
                 case ("Y"):
@@ -49,28 +47,25 @@ public class Main
                 default: System.out.println("play again?(y/n)");
             }
 
-            
-
         }
-        
+
         input.close();
-        
+
         System.out.println("Goodbye!");
-        
-        
+
     }
 
     private static void playGame()
     {
-        
+
         System.out.println("Starting new game");
-        
+
         while (remainingContestants.size() > FINALE_CONTESTANTS)
         {
             runDay();
             day++;
         }
-        
+
         System.out.println("Thanks for playing!");
 
     }
@@ -102,7 +97,7 @@ public class Main
     {
 
         System.out.println("Starting day " + day);
-        
+
         for (int i = 0; i < 24; i++)
         {
             runHour();
@@ -114,15 +109,17 @@ public class Main
         }
 
     }
-    
+
     static int getTotalContestants()
     {
         return TOTAL_CONTESTANTS;
     }
-    
-    static ArrayList getAllContestants()
+
+    static ArrayList<Contestant> getAllContestants()
     {
-        return (ArrayList) allContestants.clone();
+        @SuppressWarnings ("unchecked")
+        ArrayList<Contestant> listClone = (ArrayList<Contestant>) allContestants.clone();
+        return listClone;
     }
 
     private static final int TOTAL_CONTESTANTS = 18;
