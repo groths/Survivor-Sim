@@ -1,7 +1,12 @@
 package main;
 
+import java.awt.Dimension;
+import java.io.*;
 import java.util.ArrayList;
-import java.util.Scanner;
+import static javax.swing.JFrame.EXIT_ON_CLOSE;
+import javax.swing.*;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.Document;
 
 /**
 
@@ -10,67 +15,148 @@ import java.util.Scanner;
 public class Main
 {
 
+    private static final JTextPane textPane = new JTextPane();
+    
     /**
      @param args the command line arguments don't do anything
      */
     public static void main(String[] args)
     {
 
+//        SwingTerminal theTerminal = new SwingTerminal();
+        
+       
+        
+        JFrame mainGUI = new JFrame();
+        
+        Box theBox = new Box(BoxLayout.Y_AXIS);
+        
+        JTextField inputField = new JTextField();
+        
+        mainGUI.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        
+//        mainGUI.add(theTerminal);
+        
+        textPane.setMinimumSize(new Dimension(300,300));
+        
+        textPane.setPreferredSize(new Dimension(300, 300));
+
+        theBox.add(textPane);
+        
+        theBox.add(inputField);
+
+        mainGUI.add(theBox);
+        
+        mainGUI.setMinimumSize(new Dimension(300, 300));
+        
+        mainGUI.pack();
+        
+        mainGUI.setLocation(0,0);
+        
+        mainGUI.setVisible(true);
+        
+        redirectSystemStreams();
+        
         System.out.println("Welcome to Surivivor-Sim!");
-
-        playGame();
-
-        
-
-        Scanner input = new Scanner(System.in);
-
-        boolean keepAsking = true;
-
-        String line = "";
-
-        System.out.println("play again?(y/n)");
-        
-        while (keepAsking)
-        {
-            line = input.nextLine();
-            
-            System.out.println("debug 1");
-            
-            switch (line)
-            {
-                case ("Y"):
-                case ("y"):
-                    playGame();
-                    System.out.println("play again?(y/n)");
-                    break;
-                case ("N"):
-                case ("n"): keepAsking = false;
-                    break;
-                default: System.out.println("play again?(y/n)");
-            }
-
-            
-
-        }
-        
-        input.close();
-        
+//
+//        playGame();
+//
+//        Scanner input = new Scanner(System.in);
+//
+//        boolean keepAsking = true;
+//
+//        String line = "";
+//
+//        
+//        System.out.println("play again?(y/n)");
+//
+//        while (keepAsking)
+//        {
+//            line = input.next();
+//
+//            System.out.println("debug 1");
+//
+//            switch (line)
+//            {
+//                case ("Y"):
+//                case ("y"):
+//                    playGame();
+//                    System.out.println("play again?(y/n)");
+//                    break;
+//                case ("N"):
+//                case ("n"): keepAsking = false;
+//                    break;
+//                default: System.out.println("play again?(y/n)");
+//            }
+//
+//        }
+//        
         System.out.println("Goodbye!");
-        
-        
+
     }
 
+    
+    private static void updateTextPane(final String text)
+    {
+        SwingUtilities.invokeLater(new Runnable()
+        {
+            public void run()
+            {
+                Document doc = textPane.getDocument();
+                try
+                {
+                    doc.insertString(doc.getLength(), text, null);
+                } catch (BadLocationException e)
+                {
+                    throw new RuntimeException(e);
+                }
+                textPane.setCaretPosition(doc.getLength() - 1);
+            }
+        });
+    }
+
+    private static void redirectSystemStreams()
+    {
+        OutputStream out = new OutputStream()
+        {
+            @Override
+            public void write(final int b) throws IOException
+            {
+                updateTextPane(String.valueOf((char) b));
+            }
+
+            @Override
+            public void write(byte[] b, int off, int len) throws IOException
+            {
+                updateTextPane(new String(b, off, len));
+            }
+
+            @Override
+            public void write(byte[] b) throws IOException
+            {
+                write(b, 0, b.length);
+            }
+        };
+
+        System.setOut(new PrintStream(out, true));
+        System.setErr(new PrintStream(out, true));
+    }
+    
+    
+    
+    
+    
     private static void playGame()
     {
-        
+
         System.out.println("Starting new game");
-        
+
         while (remainingContestants.size() > FINALE_CONTESTANTS)
         {
             runDay();
             day++;
         }
-        
+
         System.out.println("Thanks for playing!");
 
     }
@@ -102,7 +188,7 @@ public class Main
     {
 
         System.out.println("Starting day " + day);
-        
+
         for (int i = 0; i < 24; i++)
         {
             runHour();
@@ -114,15 +200,17 @@ public class Main
         }
 
     }
-    
+
     static int getTotalContestants()
     {
         return TOTAL_CONTESTANTS;
     }
-    
-    static ArrayList getAllContestants()
+
+    static ArrayList<Contestant> getAllContestants()
     {
-        return (ArrayList) allContestants.clone();
+        @SuppressWarnings ("unchecked")
+        ArrayList<Contestant> listClone = (ArrayList<Contestant>) allContestants.clone();
+        return listClone;
     }
 
     private static final int TOTAL_CONTESTANTS = 18;

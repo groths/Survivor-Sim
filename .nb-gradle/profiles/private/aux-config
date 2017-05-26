@@ -6,6 +6,11 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
       <group>
         <file>file:/Users/Matt/Desktop/Survivor-Sim/build.gradle</file>
+<<<<<<< HEAD
+=======
+        <file>file:/Users/Matt/Desktop/Survivor-Sim/src/main/java/main/Main.java</file>
+        <file>file:/Users/Matt/Desktop/Survivor-Sim/src/main/java/main/Contestant.java</file>
+>>>>>>> 1190d91f10571e68e6b521eb3d3352cb9868bcc7
       </group>
     </open-files>
     <editor-bookmarks lastBookmarkId="0" xmlns="http://www.netbeans.org/ns/editor-bookmarks/2"/>
