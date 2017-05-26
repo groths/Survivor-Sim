@@ -15,9 +15,23 @@ tasks.withType(JavaCompile) {
     options.compilerArgs += ['-Xlint','-XDignore.symbol.file=true'] // optional compiler warnings to console   
 }
 
+//task runFast(type:JavaExec) {
+//    main = mainClassName
+//    classpath = sourceSets.main.runtimeClasspath
+//}
+
 // Distribution
 macAppBundle {
     mainClassName = 'main.Main' // Can't figure out why yet, but I'm unable to use the variable defined above here
     bundleJRE = true
     javaProperties.put("apple.laf.useScreenMenuBar", "true") // for some reason I think its neccesary?
+}
+
+// Dependencies
+dependencies {
+    compile "com.googlecode.lanterna:lanterna:3.0.0-rc1"    
+}
+
+repositories {
+    mavenCentral()
 }
