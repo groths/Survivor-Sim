@@ -22,17 +22,6 @@
       <task-jvm-args/>
     </task>
     <task>
-      <display-name>run</display-name>
-      <non-blocking>no</non-blocking>
-      <task-names>
-        <name must-exist="no">runFast</name>
-      </task-names>
-      <task-args>
-        <arg>-PcmdLineArgs=${cmd-line-args}</arg>
-      </task-args>
-      <task-jvm-args/>
-    </task>
-    <task>
       <display-name>debug.fix</display-name>
       <non-blocking>no</non-blocking>
       <task-names>

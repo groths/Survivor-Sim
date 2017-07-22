@@ -3,6 +3,16 @@ package main;
 import java.awt.Dimension;
 import java.io.*;
 import java.util.ArrayList;
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.ColumnConstraints;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.RowConstraints;
+import javafx.scene.shape.Rectangle;
+import javafx.stage.Stage;
 import static javax.swing.JFrame.EXIT_ON_CLOSE;
 import javax.swing.*;
 import javax.swing.text.BadLocationException;
@@ -12,7 +22,7 @@ import javax.swing.text.Document;
 
  @author Rachel, Matt
  */
-public class Main
+public class Main extends Application
 {
 
     private static final JTextPane textPane = new JTextPane();
@@ -22,74 +32,75 @@ public class Main
      */
     public static void main(String[] args)
     {
+        launch();
 
-//        SwingTerminal theTerminal = new SwingTerminal();
-        
-       
-        
-        JFrame mainGUI = new JFrame();
-        
-        Box theBox = new Box(BoxLayout.Y_AXIS);
-        
-        JTextField inputField = new JTextField();
-        
-        mainGUI.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        
-//        mainGUI.add(theTerminal);
-        
-        textPane.setMinimumSize(new Dimension(300,300));
-        
-        textPane.setPreferredSize(new Dimension(300, 300));
-
-        theBox.add(textPane);
-        
-        theBox.add(inputField);
-
-        mainGUI.add(theBox);
-        
-        mainGUI.setMinimumSize(new Dimension(300, 300));
-        
-        mainGUI.pack();
-        
-        mainGUI.setLocation(0,0);
-        
-        mainGUI.setVisible(true);
-        
-        redirectSystemStreams();
-        
-        System.out.println("Welcome to Surivivor-Sim!");
-//
-//        playGame();
-//
-//        Scanner input = new Scanner(System.in);
-//
-//        boolean keepAsking = true;
-//
-//        String line = "";
-//
+////        SwingTerminal theTerminal = new SwingTerminal();
 //        
-//        System.out.println("play again?(y/n)");
+//       
+//        
+//        //JFrame mainGUI = new JFrame();
+//        
+//        Box theBox = new Box(BoxLayout.Y_AXIS);
+//        
+//        JTextField inputField = new JTextField();
+//        
+//        //mainGUI.setDefaultCloseOperation(EXIT_ON_CLOSE);
+//        
+////        mainGUI.add(theTerminal);
+//        
+//        textPane.setMinimumSize(new Dimension(300,300));
+//        
+//        textPane.setPreferredSize(new Dimension(300, 300));
 //
-//        while (keepAsking)
-//        {
-//            line = input.next();
+//        theBox.add(textPane);
+//        
+//        theBox.add(inputField);
 //
-//            System.out.println("debug 1");
-//
-//            switch (line)
-//            {
-//                case ("Y"):
-//                case ("y"):
-//                    playGame();
-//                    System.out.println("play again?(y/n)");
-//                    break;
-//                case ("N"):
-//                case ("n"): keepAsking = false;
-//                    break;
-//                default: System.out.println("play again?(y/n)");
-//            }
-//
-//        }
+//        mainGUI.add(theBox);
+//        
+//        mainGUI.setMinimumSize(new Dimension(300, 300));
+//        
+//        mainGUI.pack();
+//        
+//        mainGUI.setLocation(0,0);
+//        
+//        mainGUI.setVisible(true);
+//        
+//        redirectSystemStreams();
+//        
+//        System.out.println("Welcome to Surivivor-Sim!");
+////
+////        playGame();
+////
+////        Scanner input = new Scanner(System.in);
+////
+////        boolean keepAsking = true;
+////
+////        String line = "";
+////
+////        
+////        System.out.println("play again?(y/n)");
+////
+////        while (keepAsking)
+////        {
+////            line = input.next();
+////
+////            System.out.println("debug 1");
+////
+////            switch (line)
+////            {
+////                case ("Y"):
+////                case ("y"):
+////                    playGame();
+////                    System.out.println("play again?(y/n)");
+////                    break;
+////                case ("N"):
+////                case ("n"): keepAsking = false;
+////                    break;
+////                default: System.out.println("play again?(y/n)");
+////            }
+////
+////        }
 //        
         System.out.println("Goodbye!");
 
@@ -224,5 +235,44 @@ public class Main
     private static ArrayList<Contestant> allContestants = new ArrayList<>(TOTAL_CONTESTANTS);
 
     private static ArrayList<Contestant> remainingContestants = new ArrayList<>(TOTAL_CONTESTANTS);
+
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+
+        GridPane grid = new GridPane();
+        
+        grid.setGridLinesVisible(true);
+        RowConstraints top = new RowConstraints();
+        top.setPercentHeight(50);
+        RowConstraints bottom = new RowConstraints();
+        bottom.setPercentHeight(50);
+        grid.getRowConstraints().addAll(top, bottom);
+        ColumnConstraints left = new ColumnConstraints();
+        left.setPercentWidth(50);
+        ColumnConstraints right = new ColumnConstraints();
+        right.setPercentWidth(50);
+        grid.getColumnConstraints().addAll(left, right);
+        Label label = new Label("hi my name is label");
+        grid.add(label, 0, 0);
+        Button button = new Button("button shmutton");
+        grid.add(button, 0, 1);
+        TextField textField = new TextField();
+        grid.add(textField, 1, 0);
+        Rectangle rectangle = new Rectangle(10, 20);
+        grid.add(rectangle, 1, 1);
+        button.setOnAction((e)->
+        {
+           label.setText(textField.getText());
+        });
+//        
+           
+        
+        Scene scene = new Scene(grid);
+        primaryStage.setScene(scene);
+        
+        
+        primaryStage.show();
+        primaryStage.centerOnScreen();
+    }
 
 }
