@@ -238,41 +238,12 @@ public class Main extends Application
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        primaryStage = null;
+        SurvivorStage survivorStage = new SurvivorStage();
+        survivorStage.show();
 
-        GridPane grid = new GridPane();
+
         
-        grid.setGridLinesVisible(true);
-        RowConstraints top = new RowConstraints();
-        top.setPercentHeight(50);
-        RowConstraints bottom = new RowConstraints();
-        bottom.setPercentHeight(50);
-        grid.getRowConstraints().addAll(top, bottom);
-        ColumnConstraints left = new ColumnConstraints();
-        left.setPercentWidth(50);
-        ColumnConstraints right = new ColumnConstraints();
-        right.setPercentWidth(50);
-        grid.getColumnConstraints().addAll(left, right);
-        Label label = new Label("hi my name is label");
-        grid.add(label, 0, 0);
-        Button button = new Button("button shmutton");
-        grid.add(button, 0, 1);
-        TextField textField = new TextField();
-        grid.add(textField, 1, 0);
-        Rectangle rectangle = new Rectangle(10, 20);
-        grid.add(rectangle, 1, 1);
-        button.setOnAction((e)->
-        {
-           label.setText(textField.getText());
-        });
-//        
-           
-        
-        Scene scene = new Scene(grid);
-        primaryStage.setScene(scene);
-        
-        
-        primaryStage.show();
-        primaryStage.centerOnScreen();
     }
 
 }
